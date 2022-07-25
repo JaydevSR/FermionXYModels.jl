@@ -6,7 +6,7 @@ mutable struct FermionXYModel1D{N}
     gamma::Float64
 end
 
-QuantumXYModel1D(L, h, J, gamma) = FermionXYModel1D{L}(rand([-1, 1], L), L, h, J, gamma)
+FermionXYModel1D(L, h, J, gamma) = FermionXYModel1D{L}(rand([-1, 1], L), L, h, J, gamma)
 
 function correlation_matrix(model::FermionXYModel1D)
     
