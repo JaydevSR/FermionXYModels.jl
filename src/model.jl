@@ -1,4 +1,4 @@
-mutable struct QuantumXYModel1D{N}
+mutable struct FermionXYModel1D{N}
     sites::Vector{Int}
     L::Int
     h::Float64
@@ -6,13 +6,13 @@ mutable struct QuantumXYModel1D{N}
     gamma::Float64
 end
 
-QuantumXYModel1D(L, h, J, gamma) = QuantumXYModel1D{L}(rand([-1, 1], L), L, h, J, gamma)
+QuantumXYModel1D(L, h, J, gamma) = FermionXYModel1D{L}(rand([-1, 1], L), L, h, J, gamma)
 
-function correlation_matrix(model::QuantumXYModel1D)
+function correlation_matrix(model::FermionXYModel1D)
     
 end
 
-function corr_g(model::QuantumXYModel1D, n::Int)
+function corr_g(model::FermionXYModel1D, n::Int)
     g_n = 0
     for k in eachindex(model.sites)
         ϕ_k = 2pi * k / model.L  # N = 1 for T = 0
