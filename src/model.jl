@@ -2,23 +2,32 @@ mutable struct FermionXYModel1D{N}
     sites::Vector{Int}
     L::Int
     J::Float64
+    h::Float64
     gamma::Float64
 end
 
-FermionXYModel1D(L, J, gamma) = FermionXYModel1D{L}(rand([-1, 1], L), L, J, gamma)
+# -1 ≡ no fermion, +1 ≡ fermion
+FermionXYModel1D(;L, J, h, gamma) = FermionXYModel1D{L}(fill(-1, L), L, J, h, gamma)
 
 function correlation_matrix(model::FermionXYModel1D)
-    G_corr = zeros(model.L, model.L)
+    return [G_n(mode, i-j) for i∈1:model.L, j∈1:model.L]
 end
 
-function corr_g(model::FermionXYModel1D, h::Float64, n::Int)
-    g_n = 0
-    for k in eachindex(model.sites)
-        ϕ_k = 2pi * k / model.L  # N = 1 for T = 0
-        ϵ_k = hypot(model.J*cos(ϕ_k) - h, model.J*model.gamma*sin(ϕ_k))
-        cos_θ_k = (model.J * cos(ϕ_k) - h) / ϵ_k
-        sin_θ_k = model.J * model.gamma * sin(ϕ_k) / ϵ_k
-        g_n += (cos_θ_k + im*sin_θ_k)*cis(ϕ_k*n)
-    end
-    return real(g_n)/model.L
+@inbounds function probability_matrix(model::FermionXYModel1D)
+    return [(1/2)δ(i, j) + model.sites[i]*G_n(model, i-j) for i∈1:model.L, j∈1:model.L]
 end
+
+function G_n(model::FermionXYModel1D, n::Int)
+    g_n = 0
+    for k in 1:model.L
+        ϕ_k = 2 * k // model.L  # N = 1 for T = 0, redefinition of ϕ_k => ϕ_k / π
+        ϵ_k = hypot(model.J*cospi(ϕ_k) - model.h, model.J*model.gamma*sinpi(ϕ_k))
+        cos_θ_k = (model.J * cospi(ϕ_k) - model.h) / ϵ_k
+        sin_θ_k = model.J * model.gamma * sinpi(ϕ_k) / ϵ_k
+        g_n += cos_θ_k*cospi(ϕ_k*n) - sin_θ_k*sinpi(ϕ_k*n)
+    end
+    return g_n
+end
+
+# Kronecker delta
+δ(i, j) = ==(i, j)

@@ -2,3 +2,6 @@ name = "FermionXYModel"
 uuid = "19fd5c17-81b1-4921-a398-53333efd3594"
 authors = ["JaydevSR <jaydevsr7701@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
