@@ -7,7 +7,17 @@ mutable struct FermionXYModel1D{N}
 end
 
 # -1 ≡ no fermion, +1 ≡ fermion
-FermionXYModel1D(;L, J, h, gamma) = FermionXYModel1D{L}(fill(-1, L), L, J, h, gamma)
+FermionXYModel1D(;L, J, h, γ) = FermionXYModel1D{L}(fill(-1, L), L, J, h, γ)
+
+"""
+The XX model, also known as the isotropic (γ=0) XY model, projected to spinless fermions.
+"""
+FermionXXModel1D(;L, J, h) = FermionXYModel1D{L}(fill(-1, L), L, J, h, 0)
+
+"""
+The Ising model, i.e. the XY model with γ=1, projected to spinless fermions.
+"""
+FermionIsingModel1D(;L, J, h) = FermionXYModel1D{L}(fill(1, L), L, J, h, 1)
 
 function correlation_matrix(model::FermionXYModel1D)
     return [G_n(mode, i-j) for i∈1:model.L, j∈1:model.L]
