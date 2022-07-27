@@ -8,6 +8,14 @@ function metropolis_update!(model::FermionXYModel1D; P_old::Float64=config_proba
     return model, P_new
 end
 
+function equilibrate!(model::FermionXYModel1D, steps::Int=1000)
+    p = config_probability(model)
+    for _ in 1:steps
+        model, p = metropolis_update!(model, P_old=p)
+    end
+    return model
+end
+
 function config_probability(model::FermionXYModel1D)
     return det(probability_matrix(model))
 end
