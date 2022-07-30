@@ -1,6 +1,7 @@
 module FermionXYModel
 
 using LinearAlgebra
+using ToeplitzMatrices
 
 export FermionXYModel1D,
     FermionIsingModel1D,
@@ -10,7 +11,8 @@ export FermionXYModel1D,
     correlation_matrix,
     probability_matrix
 
-include("model.jl")
+include("fermions.jl")
+include("models.jl")
 include("montecarlo.jl")
 
 end # module
