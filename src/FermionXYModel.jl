@@ -1,7 +1,6 @@
 module FermionXYModel
 
 using LinearAlgebra
-using ToeplitzMatrices
 
 export FermionXYModel1D,
     FermionIsingModel1D,
