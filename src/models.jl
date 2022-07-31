@@ -1,3 +1,9 @@
+export FermionXYModel1D,
+    FermionIsingModel1D,
+    FermionXXModel1D,
+    correlation_matrix,
+    probability_matrix
+
 """
 The **quantum XY model** projected to spinless fermions with **periodic boundary conditions** (PBC). The sites
 consist of the elements from set {-1, 1}, where -1 represents no fermion and 1 represents a fermion at that site.
