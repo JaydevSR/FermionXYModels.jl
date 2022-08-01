@@ -10,7 +10,7 @@ during construction. The basis can be materialized using [`collect`](@ref) (not 
 struct FermionBasis
     n_sites::Int
     states::Tuple{Int, Int}
-    function FermionBasis(n_sites::Int; states::Tuple{Int, Int}=(-1, 1))
+    function FermionBasis(n_sites::Int; states::Tuple=(-1, 1))
         if length(states) != 2
             throw(ArgumentError("length(states) != 2: Fermion basis requries two states. "))
         end
