@@ -1,6 +1,6 @@
-export FermionXYModel1D,
-    FermionIsingModel1D,
-    FermionXXModel1D,
+export FermionXYChain,
+    FermionIsingChain,
+    FermionXXChain,
     correlation_matrix,
     probability_matrix
 
@@ -8,7 +8,7 @@ export FermionXYModel1D,
 The **quantum XY model** projected to spinless fermions with **periodic boundary conditions** (PBC). The sites
 consist of the elements from set {-1, 1}, where -1 represents no fermion and 1 represents a fermion at that site.
 """
-mutable struct FermionXYModel1D{N}
+mutable struct FermionXYChain{N}
     sites::Vector{Int}
     L::Int
     J::Float64
@@ -17,19 +17,30 @@ mutable struct FermionXYModel1D{N}
 end
 
 # -1 ≡ no fermion, +1 ≡ fermion
-FermionXYModel1D(;L, J, h, gamma) = FermionXYModel1D{L}(fill(-1, L), L, J, h, gamma)
+FermionXYChain(;L::Int, J::Real, h::Real, gamma::Real) = FermionXYChain{L}(
+                                                                rand([-1, 1], L), L,
+                                                                convert(Float64, J),
+                                                                convert(Float64, h),
+                                                                convert(Float64, gamma))
 
 """
 The **XX model**, also known as the isotropic (γ=0) XY model, projected to spinless fermions with PBC.
 """
-FermionXXModel1D(;L, J, h) = FermionXYModel1D{L}(rand([-1, 1], L), L, J, h, 0)
-
+FermionXXChain(;L::Int, J::Real, h::Real) = FermionXYChain{L}(
+                                rand([-1, 1], L), L,
+                                convert(Float64, J),
+                                convert(Float64, h),
+                                0.0)
 """
 The **Ising model**, i.e. the XY model with γ=1, projected to spinless fermions with PBC.
 """
-FermionIsingModel1D(;L, J, h) = FermionXYModel1D{L}(rand([-1, 1], L), L, J, h, 1)
+FermionIsingChain(;L::Int, J::Real, h::Real) = FermionXYChain{L}(
+                                    rand([-1, 1], L), L,
+                                    convert(Float64, J),
+                                    convert(Float64, h),
+                                    1.0)
 
-correlation_matrix(model::FermionXYModel1D; sign::Int=-1) = correlation_matrix(; 
+correlation_matrix(model::FermionXYChain; sign::Int=-1) = correlation_matrix(; 
                                                                         L=model.L, J=model.J,
                                                                         h=model.h, gamma=model.gamma,
                                                                         sign=sign)
@@ -38,7 +49,7 @@ function correlation_matrix(;L::Int, J::Float64, h::Float64, gamma::Float64, sig
     return [G_nm(i, j; L=L, J=J, h=h, gamma=gamma, sign=sign) for i∈1:L, j∈1:L]
 end
 
-probability_matrix(model::FermionXYModel1D; sign=-1) = probability_matrix(model.sites;
+probability_matrix(model::FermionXYChain; sign=-1) = probability_matrix(model.sites;
                                                                     L=model.L, J=model.J,
                                                                     h=model.h, gamma=model.gamma,
                                                                     sign=sign)

@@ -1,6 +1,6 @@
 export metropolis_update!, config_probability
 
-function metropolis_update!(model::FermionXYModel1D; P_old::Float64=config_probability(model))
+function metropolis_update!(model::FermionXYChain; P_old::Float64=config_probability(model))
     site = rand(1:model.L)
     model.sites[site] = -model.sites[site]  # do the flip
     P_new = config_probability(model)
@@ -10,7 +10,7 @@ function metropolis_update!(model::FermionXYModel1D; P_old::Float64=config_proba
     return model, P_new
 end
 
-function equilibrate!(model::FermionXYModel1D, steps::Int=1000)
+function equilibrate!(model::FermionXYChain, steps::Int=1000)
     p = config_probability(model)
     for _ in 1:steps
         model, p = metropolis_update!(model, P_old=p)
@@ -18,6 +18,4 @@ function equilibrate!(model::FermionXYModel1D, steps::Int=1000)
     return model
 end
 
-function config_probability(model::FermionXYModel1D)
-    return det(probability_matrix(model))
-end
+config_probability(model::FermionXYChain) = det(probability_matrix(model))

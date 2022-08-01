@@ -2,3 +2,5 @@ Manifest.toml
 
 # vs code
 .vscode/*
+
+*.ipynb

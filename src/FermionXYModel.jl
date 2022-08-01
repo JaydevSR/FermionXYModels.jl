@@ -1,4 +1,4 @@
-module FermionXYModel
+module FermionXYModels
 
 using LinearAlgebra
 
