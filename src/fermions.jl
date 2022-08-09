@@ -9,7 +9,7 @@ during construction. The basis can be materialized using [`collect`](@ref) (not 
 """
 struct FermionBasis
     n_sites::Int
-    states::Tuple{Int, Int}
+    states::Tuple{Int,Int}
     function FermionBasis(n_sites::Int; states::Tuple=(-1, 1))
         if length(states) != 2
             throw(ArgumentError("length(states) != 2: Fermion basis requries two states. "))
@@ -26,7 +26,7 @@ function Base.iterate(b::FermionBasis, state::Int64=0)
         return nothing
     end
     indices = digits(state, base=2, pad=b.n_sites)
-    return Tuple(b.states[i+1] for i in indices), state+1
+    return Tuple(b.states[i+1] for i in indices), state + 1
 end
 
 Base.length(b::FermionBasis) = 2^b.n_sites
