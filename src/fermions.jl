@@ -5,7 +5,7 @@ export FermionBasis
 
 Construct a binary fermion basis for a chain of fermions with `n_sites` in form of an interator. The default field is
 `(-1, 1)` which can be optionally changed by specifying the keyword argument `states` as a `Tuple`. No allocations are made 
-during construction. The basis can be materialized using [`collect`](@ref) (not recommended for long chains).
+during construction. The basis can be materialized using `collect` (not recommended for long chains).
 """
 struct FermionBasis
     n_sites::Int
