@@ -15,8 +15,8 @@ mutable struct FermionXYChain{N}
     h::Float64
     gamma::Float64
     corr::Matrix{Float64}
-    sign::Int
-    function FermionXYChain(; L::Int, J::Real, h::Real, gamma::Real, start::Symbol=:rand, sign::Int=-1)
+    parity::Int
+    function FermionXYChain(; L::Int, J::Real, h::Real, gamma::Real, start::Symbol=:rand, parity::Int=-1)
         if L <= 0
             throw(ArgumentError("FermionXYChain requires L > 0."))
         end
@@ -26,8 +26,8 @@ mutable struct FermionXYChain{N}
         if J == 0
             throw(ArgumentError("FermionXYChain requires J to be non-zero."))
         end
-        if sign != -1 && sign != 1
-            throw(ArgumentError("FermionXYChain requires sign to be -1 or 1."))
+        if parity != -1 && parity != 1
+            throw(ArgumentError("FermionXYChain requires parity to be -1 or 1."))
         end
         J = convert(Float64, J)
         h = convert(Float64, h)
@@ -41,8 +41,8 @@ mutable struct FermionXYChain{N}
         else
             throw(ArgumentError("FermionXYChain allows start = :rand | :vacuum | :filled. "))
         end
-        corr = correlation_matrix(; L=L, J=J, h=h, gamma=gamma, sign=sign)
-        new{L}(sites, L, J, h, gamma, corr, sign)
+        corr = correlation_matrix(; L=L, J=J, h=h, gamma=gamma, parity=parity)
+        new{L}(sites, L, J, h, gamma, corr, parity)
     end
 end
 
@@ -67,11 +67,11 @@ correlation_matrix(model::FermionXYChain) = model.corr
 probability_matrix(model::FermionXYChain) = probability_matrix(model.sites;
     L=model.L, J=model.J,
     h=model.h, gamma=model.gamma,
-    sign=sign, corr=model.corr)
+    parity=model.parity, corr=model.corr)
 
 # correlation matrix of the fermion chain
-function correlation_matrix(; L::Int, J::Float64, h::Float64, gamma::Float64, sign::Int=-1)
-    return [G_nm(i, j; L=L, J=J, h=h, gamma=gamma, sign=sign) for i ∈ 1:L, j ∈ 1:L]
+function correlation_matrix(; L::Int, J::Float64, h::Float64, gamma::Float64, parity::Int=-1)
+    return [G_nm(i, j; L=L, J=J, h=h, gamma=gamma, parity=parity) for i ∈ 1:L, j ∈ 1:L]
 end
 
 # probability matrix of the fermion chain
@@ -80,9 +80,9 @@ end
     J::Float64,
     h::Float64,
     gamma::Float64,
-    sign::Int=-1,
+    parity::Int=-1,
     corr::Matrix{Float64}=correlation_matrix(;
-        L=L, J=J, h=h, gamma=gamma, sign=sign))
+        L=L, J=J, h=h, gamma=gamma, parity=parity))
 
     if length(sites) != L
         throw(ArgumentError("The number of sites is not equal to the model's length"))
@@ -91,10 +91,10 @@ end
 end
 
 # elements of correlation matrix of the fermion chain
-function G_nm(n::Int, m::Int; L::Int, J::Float64, h::Float64, gamma::Float64, sign::Int=-1)
+function G_nm(n::Int, m::Int; L::Int, J::Float64, h::Float64, gamma::Float64, parity::Int=-1)
     g_n = 0
     for k in 1:L
-        ϕ_k = (2k + (sign - 1) // 2) // L  # redefinition of ϕ_k => ϕ_k / π
+        ϕ_k = (2k + (parity - 1) // 2) // L  # redefinition of ϕ_k => ϕ_k / π
         ϵ_k = hypot(J * cospi(ϕ_k) + h, J * gamma * sinpi(ϕ_k))
         cos_θ_k = (J * cospi(ϕ_k) + h) / ϵ_k
         sin_θ_k = J * gamma * sinpi(ϕ_k) / ϵ_k
