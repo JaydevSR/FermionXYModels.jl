@@ -81,7 +81,7 @@ end
     h::Float64,
     gamma::Float64,
     parity::Int=-1,
-    corr::Matrix{Float64}=correlation_matrix(;
+    corr::Matrix{<:Union{Float64, BigFloat}}=correlation_matrix(;
         L=L, J=J, h=h, gamma=gamma, parity=parity))
 
     if length(sites) != L
@@ -91,8 +91,9 @@ end
 end
 
 # elements of correlation matrix of the fermion chain
-function G_nm(n::Int, m::Int; L::Int, J::Float64, h::Float64, gamma::Float64, parity::Int=-1)
+function G_nm(n::Int, m::Int; L::Int, J::Float64, h::Float64, gamma::Float64, parity::Int=-1, float_type::Type=Float64)
     g_n = 0
+    tmp, J, h, gamma = promote(zero(float_type), J, h, gamma)
     for k in 1:L
         ϕ_k = (2k + (parity - 1) // 2) // L  # redefinition of ϕ_k => ϕ_k / π
         ϵ_k = hypot(J * cospi(ϕ_k) + h, J * gamma * sinpi(ϕ_k))

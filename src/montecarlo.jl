@@ -1,11 +1,11 @@
 export metropolis_update!, config_probability
 
-function metropolis_update!(model::FermionXYChain; P_old::Float64=config_probability(model))
+@inbounds function metropolis_update!(model::FermionXYChain; P_old::Float64=config_probability(model))
     site = rand(1:model.L)
-    model.sites[site] = -model.sites[site]  # do the flip
+    model.sites[site] *= -1  # do the flip
     P_new = config_probability(model)
     if rand() > (P_new / P_old)
-        model.sites[site] = -model.sites[site]  # revert the flip
+        model.sites[site] *= -1  # revert the flip
     end
     return model, P_new
 end
