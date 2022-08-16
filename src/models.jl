@@ -70,8 +70,8 @@ probability_matrix(model::FermionXYChain) = probability_matrix(model.sites;
     parity=model.parity, corr=model.corr)
 
 # correlation matrix of the fermion chain
-function correlation_matrix(; L::Int, J::Float64, h::Float64, gamma::Float64, parity::Int=-1)
-    return [G_nm(i, j; L=L, J=J, h=h, gamma=gamma, parity=parity) for i ∈ 1:L, j ∈ 1:L]
+function correlation_matrix(; L::Int, J::Float64, h::Float64, gamma::Float64, parity::Int=-1, float_type::Type=Float64)
+    return [G_nm(i, j; L=L, J=J, h=h, gamma=gamma, parity=parity, float_type=float_type) for i ∈ 1:L, j ∈ 1:L]
 end
 
 # probability matrix of the fermion chain
@@ -81,8 +81,9 @@ end
     h::Float64,
     gamma::Float64,
     parity::Int=-1,
+    float_type::Type=Float64,
     corr::Matrix{<:Union{Float64, BigFloat}}=correlation_matrix(;
-        L=L, J=J, h=h, gamma=gamma, parity=parity))
+        L=L, J=J, h=h, gamma=gamma, parity=parity, float_type=float_type))
 
     if length(sites) != L
         throw(ArgumentError("The number of sites is not equal to the model's length"))
