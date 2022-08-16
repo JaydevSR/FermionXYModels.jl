@@ -15,7 +15,7 @@
     - `h::Real`: The magnetic field.
     - `gamma::Real`: The anisotropy constant.
     - `start::Symbol`: The initial state. Can be one of `:rand`, `:vacuum`, `:filled`
-    - `parity::Int`: Can be 1 or -1.
+    - `parity::Int=-1`: Can be -1 or 1.
 
 - `FermionXXChain`: The quantum XY model for $\gamma=0$.
 
@@ -28,7 +28,7 @@
     - `J::Real`: The coupling constant.
     - `h::Real`: The magnetic field.
     - `gamma::Real`: The anisotropy constant.
-    - `parity::Int`: Can be 1 or -1.
+    - `parity::Int=-1`: Can be -1 or 1.
 
 - `probability_matrix`: Calculates the probability matrix of the chain. The probability of the particular configuration is then given by $\det(P)$ where $P$ is the said matrix. Has two methods, one takes a `FermionXYChain` as argument. Other takes the agruments:
 
@@ -37,7 +37,7 @@
     - `J::Real`: The coupling constant.
     - `h::Real`: The magnetic field.
     - `gamma::Real`: The anisotropy constant.
-    - `parity::Int`: Can be 1 or -1.
+    - `parity::Int=-1`: Can be -1 or 1.
 
 ## Monte-Carlo Simulation
 - `metropolis_update!(model::FermionXYChain)`: Generates a new configuration for the chain by performing single site updates using acceptance rate $A(P'|P) = \cfrac{P'}{P}$, where $P'$ is the probability of new configuration and $P$ is that of old configuration..
