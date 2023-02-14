@@ -44,3 +44,5 @@
 ## Monte-Carlo Simulation
 - `metropolis_update!(model::FermionXYChain)`: Generates a new configuration for the chain by performing single site updates using acceptance rate $A(P'|P) = \cfrac{P'}{P}$, where $P'$ is the probability of new configuration and $P$ is that of old configuration..
 - `equilibrate!(model::FermionXYChain, steps::Int)`: Equilibrates the chain by performing $N$ updates.
+
+**Note: The above methods for monte-carlo sampling are useless from my experience this is probably because single site updates can not capture the transformation from quantum spins to spinless fermions. If anyone knows more about this please inform me by opening an issue**
