@@ -5,6 +5,8 @@
 
 **Correlation Matrix of Quantum XY Model by projecting the spins to spinless fermions.**
 
+Reference: Stéphan, J., Misguich, G., &amp; Pasquier, V. (2010). Rényi entropy of a line in two-dimensional Ising models. Physical Review B, 82(12). doi:10.1103/physrevb.82.125455
+
 ## Models
 
 - `FermionXYChain`: The quantum XY model as a chain of fermions.
