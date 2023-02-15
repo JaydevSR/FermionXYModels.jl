@@ -3,9 +3,16 @@
 [![Build status (Github Actions)](https://github.com/JaydevSR/FermionXYModels.jl/workflows/CI/badge.svg)](https://github.com/JaydevSR/FermionXYModels.jl/actions)
 [![codecov.io](http://codecov.io/github/JaydevSR/FermionXYModels.jl/coverage.svg?branch=main)](http://codecov.io/github/JaydevSR/FermionXYModels.jl?branch=main)
 
-**Correlation Matrix of Quantum XY Model by projecting the spins to spinless fermions.**
+_**Quantum XY Model by projecting the spins to spinless fermions.**_
 
-Reference: Stéphan, J., Misguich, G., &amp; Pasquier, V. (2010). Rényi entropy of a line in two-dimensional Ising models. Physical Review B, 82(12). doi:10.1103/physrevb.82.125455
+**Reference**: Stéphan, J., Misguich, G., &amp; Pasquier, V. (2010). Rényi entropy of a line in two-dimensional Ising models. Physical Review B, 82(12). doi:10.1103/physrevb.82.125455
+
+## Installation
+
+```julia
+using Pkg
+Pkg.add("FermionXYModels.jl")
+```
 
 ## Models
 
@@ -23,9 +30,9 @@ Reference: Stéphan, J., Misguich, G., &amp; Pasquier, V. (2010). Rényi entropy
 
 - `FermionIsingChain`: The quantum XY model for $\gamma=1$.
 
-## FermionBasis
+## Iterators
 
-the `FermionBasis` constructor can be used to construct an iterator over the binary basis of fermion chains. It accepts the following arguments:
+- `FermionBasis`: An Iterator over the binary basis of fermion chains. It accepts the following arguments:
    
    **Arguments:**
    - `n_sites::Int`: The number of sites in fermion chain.
