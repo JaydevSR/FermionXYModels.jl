@@ -23,6 +23,16 @@ Reference: Stéphan, J., Misguich, G., &amp; Pasquier, V. (2010). Rényi entropy
 
 - `FermionIsingChain`: The quantum XY model for $\gamma=1$.
 
+## FermionBasis
+
+the `FermionBasis` constructor can be used to construct an iterator over the binary basis of fermion chains. It accepts the following arguments:
+   
+   **Arguments:**
+   - `n_sites::Int`: The number of sites in fermion chain.
+   - `states::Tuple=(-1, 1)`: A keyword argument taking the integer representation of filled and unfilled sites.
+
+
+
 ## Correlations and Probabilities
 - `correlation_matrix`: Calculates the correlation matrix of the chain given by $G_{ij} = \langle a_i^\dagger a_j\rangle$. Has two methods, one takes a `FermionXYChain` as argument. Other takes the agruments:
 
